@@ -1,0 +1,113 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
+  background: linear-gradient(45deg, #1c1c2b, #0a0a23);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.error-text {
+  text-align: left;
+  color: white;
+  max-width: 500px;
+}
+
+.error-text h1 {
+  font-size: 10rem;
+  color: #ff4757;
+  text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.error-text h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.error-text p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.home-button {
+  padding: 12px 24px;
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+  background-color: #ff6b81;
+}
+
+.astronaut img {
+  width: 300px;
+  animation: float 6s ease-in-out infinite;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('stars.png') repeat;
+  z-index: 0;
+  animation: twinkling 50s infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes twinkling {
+  from { background-position: 0 0; }
+  to { background-position: -10000px 5000px; }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .astronaut img {
+    width: 200px;
+  }
+
+  .error-text h1 {
+    font-size: 6rem;
+  }
+
+  .error-text h2 {
+    font-size: 1.8rem;
+  }
+}

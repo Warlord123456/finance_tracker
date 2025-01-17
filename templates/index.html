@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Expense Dashboard - Finance Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .expense-table th, .expense-table td {
+            padding: 10px;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+
+        .expense-table td.wrap {
+            white-space: normal;
+        }
+
+        .expense-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .expense-table th {
+            cursor: pointer;
+        }
+
+        .expense-table td {
+            font-size: 14px;
+        }
+
+        .items-column-header {
+            width: 20%;
+        }
+
+        .items-column {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        @media (max-width: 768px) {
+            .expense-table th, .expense-table td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .expense-table th {
+                position: absolute;
+                left: -9999px;
+            }
+
+            .expense-table td::before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: inline-block;
+                margin-bottom: 5px;
+            }
+
+            .items-column-header {
+                width: 25%;
+            }
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .actions .btn {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .actions .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">Finance Tracker</div>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle">
+        <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </label>
+
+        <ul class="nav-links">
+            <li><a href="/" class="{% if current_page == 'home' %}active{% endif %}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/upload" class="{% if current_page == 'upload' %}active{% endif %}"><i class="fas fa-upload"></i> Upload</a></li>
+            <li><a href="/reports" class="{% if current_page == 'reports' %}active{% endif %}"><i class="fas fa-file-alt"></i> Reports</a></li>
+        </ul>
+
+        <button id="darkModeToggle" class="btn-toggle" aria-label="Toggle dark mode">
+            <span id="darkModeIcon">
+                <i id="moon-icon" class="fas fa-moon icon fade-in" style="font-size: 20px;"></i>
+                <i id="sun-icon" class="fas fa-sun icon fade-out" style="font-size: 20px;"></i>
+            </span>
+            <span id="toggleText">Dark Mode</span>
+        </button>
+    </nav>
+
+    <div class="side-nav" id="mySideNav" aria-label="Main Navigation">
+        <span class="closebtn" onclick="closeNav()" aria-label="Close Menu">&times;</span>
+        <a href="/" class="{% if current_page == 'home' %}active{% endif %}"><i class="fas fa-home"></i> Home</a>
+        <a href="/upload" class="{% if current_page == 'upload' %}active{% endif %}"><i class="fas fa-upload"></i> Upload</a>
+        <a href="/reports" class="{% if current_page == 'reports' %}active{% endif %}"><i class="fas fa-file-alt"></i> Reports</a>
+    </div>
+
+    <div id="overlay" onclick="closeNav()"></div>
+
+    <main class="container">
+        <h1>Expense Dashboard</h1>
+        <p>Track your expenses effectively. Below is a list of your recorded expenses.</p>
+
+        <div class="expense-card">
+            <table class="expense-table" id="expenseTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Description</th>
+                        <th onclick="sortTable(1)">Amount</th>
+                        <th onclick="sortTable(2)">Merchant</th>
+                        <th onclick="sortTable(3)">Invoice Number</th>
+                        <th onclick="sortTable(4)" class="items-column-header">Items</th>
+                        <th onclick="sortTable(5)">Date</th>
+                        <th onclick="sortTable(6)">Receipt Date</th>
+                        <th onclick="sortTable(7)">Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td data-label="Description:">{{ expense[1] }}</td>
+                        <td data-label="Amount:">{{ expense[2] }}</td>
+                        <td data-label="Merchant:">{{ expense[3] }}</td>
+                        <td data-label="Invoice Number:">{{ expense[4] }}</td>
+                        <td data-label="Items:" class="items-column">{{ expense[5] }}</td>
+                        <td data-label="Date:">{{ expense[6] }}</td>
+                        <td data-label="Receipt Date:">{{ expense[7] }}</td>
+                        <td data-label="Category:" class="wrap">{{ expense[8] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="actions">
+            <a href="/upload" class="btn">Upload New Receipt</a>
+            <a href="/reports" class="btn">View Reports</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Finance Tracker. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySideNav").style.left = "0";
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function closeNav() {
+            document.getElementById("mySideNav").style.left = "-550px";
+            document.getElementById("overlay").style.display = "none";
+            document.querySelector('.nav-toggle').checked = false;
+        }
+
+        document.getElementById("nav-toggle").addEventListener("change", function() {
+            if (this.checked) {
+                openNav();
+            } else {
+                closeNav();
+            }
+        });
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById("expenseTable");
+            const rows = Array.from(table.rows).slice(1);
+            let isAscending = table.getAttribute("data-sort-order") !== "asc";
+
+            rows.sort((a, b) => {
+                const cellA = a.cells[columnIndex].innerText.trim();
+                const cellB = b.cells[columnIndex].innerText.trim();
+
+                return isAscending
+                    ? (isNaN(cellA) || isNaN(cellB) ? cellA.localeCompare(cellB) : parseFloat(cellA) - parseFloat(cellB))
+                    : (isNaN(cellA) || isNaN(cellB) ? cellB.localeCompare(cellA) : parseFloat(cellB) - parseFloat(cellA));
+            });
+
+            const tbody = table.querySelector("tbody");
+            tbody.innerHTML = "";
+            rows.forEach(row => tbody.appendChild(row));
+
+            table.setAttribute("data-sort-order", isAscending ? "asc" : "desc");
+        }
+    </script>
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+
+</body>
+</html>

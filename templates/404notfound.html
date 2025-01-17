@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>404 Not Found</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/404.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="error-text">
+      <h1>404</h1>
+      <h2>Oops! Page Not Found</h2>
+      <p>It looks like the page you're looking for doesn't exist.</p>
+      <a href="/" class="home-button">Go Home</a>
+    </div>
+    <div class="astronaut">
+      <img src="{{ url_for('static', filename='astronaut.svg') }}" alt="Astronaut floating">
+    </div>
+  </div>
+
+  <div class="stars"></div>
+
+  <script type="text/javascript">
+      // Optionally, you can add interactivity here, such as an animation when clicking the home button
+      document.querySelector('.home-button').addEventListener('click', () => {
+        alert('Returning to the homepage!');
+      });
+  </script>
+</body>
+</html>

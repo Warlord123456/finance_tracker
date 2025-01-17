@@ -1,0 +1,148 @@
+/* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: margin-left 0.3s; /* Smooth transition for sidebar */
+            background-color: #ffffff; /* Light background for contrast */
+            color: #333; /* Dark text color for readability */
+        }
+
+        /* Navigation */
+        .navbar {
+            background-color: #007bff; /* Bootstrap primary color */
+            padding: 10px 20px;
+            color: white;
+            display: flex; /* Flexbox for navigation items */
+            justify-content: space-between; /* Space between logo and links */
+            align-items: center; /* Center items vertically */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Side Navigation */
+        .side-nav {
+            height: 100%; /* Full-height */
+            width: 250px; /* Set the width of the side nav */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            top: 0;
+            left: -550px; /* Hidden by default */
+            background-color: #007bff; /* Dark blue background */
+            overflow-x: hidden; /* Disable horizontal scroll */
+            transition: left 0.5s; /* Transition effect */
+            padding-top: 60px; /* Space from the top */
+        }
+
+        .side-nav a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white; /* White text */
+            display: flex; /* Flexbox for icon and text alignment */
+            align-items: center; /* Center items vertically */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+            margin-top: 30px;
+        }
+
+        .side-nav a:hover,
+        .side-nav a.active {
+            background-color: #0056b3; /* Darker blue on hover and for active link */
+            font-weight: bold; /* Bold text for active link */
+        }
+
+        /* Close button styles */
+        .closebtn {
+            position: absolute;
+            top: 15px; /* Position close button */
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer; /* Pointer cursor */
+        }
+
+        /* Main content */
+        .container {
+            padding: 20px;
+            margin-left: auto; /* No left margin by default */
+        }
+
+        /* Style for the toggle button */
+        .nav-toggle {
+            display: none; /* Hide checkbox */
+        }
+
+        .nav-toggle-label {
+            cursor: pointer; /* Pointer cursor on hover */
+            display: none; /* Hide in desktop view */
+        }
+
+        /* Mobile styles */
+        @media screen and (max-width: 768px) {
+            .nav-toggle-label {
+                display: block; /* Show toggle button */
+            }
+
+            .side-nav {
+                width: 70%; /* Full width for mobile */
+            }
+
+            .container {
+                margin-left: 0; /* Reset margin */
+            }
+
+            .nav-links {
+                display: none; /* Hide regular nav links */
+            }
+        }
+
+        /* Table Styles */
+        .expense-table {
+            width: 100%;
+            border-collapse: collapse; /* Remove cell spacing */
+            margin-top: 20px; /* Space above table */
+            background-color: #ffffff; /* White background for the table */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for table */
+        }
+
+        .expense-table th,
+        .expense-table td {
+            padding: 12px;
+            text-align: left; /* Left-align text */
+            border-bottom: 1px solid #ddd; /* Bottom border for rows */
+        }
+
+        .expense-table th {
+            background-color: #1A202C; /* Light gray header */
+            color: #fff; /* Dark text for header */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #007bff; /* Dark blue background */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }

@@ -1,0 +1,14 @@
+Flask==2.3.3                    # Core web framework
+pytesseract==0.3.10              # Tesseract OCR library
+Pillow==10.0.1                   # Image processing library
+python-dateutil==2.8.2           # Date handling
+Werkzeug==2.3.7                  # Core utility for Flask
+click==8.1.3                     # Command-line interface support for Flask
+itsdangerous==2.1.2              # Flask security
+Jinja2==3.1.2                    # Templating engine for Flask
+Flask-SQLAlchemy==3.0.3          # ORM for SQLite database
+SQLAlchemy==2.0.20               # SQL toolkit for Python (core for Flask-SQLAlchemy)
+Flask-Bootstrap==3.3.7.1         # Bootstrap integration for Flask
+WTForms==3.0.1                   # Form handling for validation
+Flask-WTF==1.1.1                 # WTForms integration with Flask
+loguru==0.6.0                    # Advanced logging

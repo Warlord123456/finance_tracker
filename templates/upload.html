@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Upload Receipt - Finance Tracker</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            /* Basic styles */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                transition: margin-left 0.3s;
+            }
+
+            /* Navigation */
+            .navbar {
+                background-color: #333;
+                padding: 10px 20px;
+                color: white;
+            }
+
+            .logo {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            /* Main content */
+            .container {
+                padding: 20px;
+                margin-left: auto;
+            }
+
+            .file-upload-area.drag-over {
+                background-color: rgba(0, 0, 0, 0.1);
+                border: 2px dashed #333;
+            }
+
+            /* Mobile styles */
+            @media screen and (max-width: 768px) {
+                .container {
+                    margin-left: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="logo">Finance Tracker</div>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label">
+                <i class="fas fa-bars"></i>
+            </label>
+            <ul class="nav-links">
+                <li>
+                    <a href="/" class="{% if current_page == 'home' %}active{% endif %}">
+                        <i class="fas fa-home"></i> Home </a>
+                </li>
+                <li>
+                    <a href="/upload" class="{% if current_page == 'upload' %}active{% endif %}">
+                        <i class="fas fa-upload"></i> Upload </a>
+                </li>
+                <li>
+                    <a href="/reports" class="{% if current_page == 'reports' %}active{% endif %}">
+                        <i class="fas fa-file-alt"></i> Reports </a>
+                </li>
+            </ul>
+            <!-- Dark Mode Toggle Button -->
+            <button id="darkModeToggle" class="btn-toggle">
+                <span id="darkModeIcon">
+                    <i id="moon-icon" class="fas fa-moon icon fade-in" style="font-size: 20px;"></i>
+                    <i id="sun-icon" class="fas fa-sun icon fade-out" style="font-size: 20px;"></i>
+                </span>
+                <span id="toggleText">Dark Mode</span>
+            </button>
+        </nav>
+        <!-- Side Navigation Bar -->
+        <div class="side-nav" id="mySideNav" aria-label="Main Navigation">
+            <span class="closebtn" onclick="closeNav()" aria-label="Close Menu">&times;</span>
+            <a href="/" class="{% if current_page == 'home' %}active{% endif %}">
+                <i class="fas fa-home"></i> Home </a>
+            <a href="/upload" class="{% if current_page == 'upload' %}active{% endif %}">
+                <i class="fas fa-upload"></i> Upload </a>
+            <a href="/reports" class="{% if current_page == 'reports' %}active{% endif %}">
+                <i class="fas fa-file-alt"></i> Reports </a>
+        </div>
+        <!-- Overlay for the sidebar -->
+        <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:0;" onclick="closeNav()"></div>
+        <!-- Container -->
+        <div class="container">
+            <h1>Upload Your Receipt</h1>
+            <p>Please upload your receipt image below, or drag and drop the file:</p>
+            <form action="/upload" method="POST" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+                <!-- File Upload with Drag-and-Drop -->
+                <div id="dropArea" class="file-upload-area">
+                    <i class="fas fa-upload icon"></i>
+                    <p>Drag and drop your receipt here or click to select</p>
+                    <input type="file" id="file-upload" name="file" accept="image/*" multiple required style="display: none;">
+                    <div id="fileNameContainer" class="file-name"></div>
+                </div>
+                <div class="file-preview" id="filePreview">
+                    <img id="previewImage" alt="File Preview">
+                </div>
+                <button type="submit" class="btn">Upload Receipt</button>
+                <div class="error-message" id="errorMessage"></div>
+            </form>
+        </div>
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Finance Tracker. All rights reserved.</p>
+        </footer>
+        <!-- JavaScript for Drag-and-Drop, File Preview, and Validation -->
+        <script>
+            // Handle file drag and drop
+            const dropArea = document.getElementById('dropArea');
+            const fileInput = document.getElementById('file-upload');
+            const fileNameContainer = document.getElementById('fileNameContainer');
+            const filePreview = document.getElementById('filePreview');
+            const previewImage = document.getElementById('previewImage');
+            const errorMessage = document.getElementById('errorMessage');
+            // Initialize the preview as hidden
+            filePreview.style.display = 'none';
+            dropArea.addEventListener('dragover', function(event) {
+                event.preventDefault();
+                dropArea.classList.add('drag-over');
+            });
+            dropArea.addEventListener('dragleave', function(event) {
+                event.preventDefault();
+                dropArea.classList.remove('drag-over');
+            });
+            dropArea.addEventListener('drop', function(event) {
+                event.preventDefault();
+                dropArea.classList.remove('drag-over');
+                const file = event.dataTransfer.files[0];
+                if (file) {
+                    fileInput.files = event.dataTransfer.files;
+                    handleFile(file);
+                }
+            });
+            dropArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            fileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    handleFile(file);
+                } else {
+                    // Clear the preview and file name if no file is selected
+                    fileNameContainer.textContent = '';
+                    filePreview.style.display = 'none';
+                }
+            });
+
+            function handleFile(file) {
+                if (file.type.startsWith('image/')) {
+                    fileNameContainer.textContent = file.name;
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                        filePreview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                    errorMessage.textContent = '';
+                } else {
+                    filePreview.style.display = 'none';
+                    errorMessage.textContent = 'Please select a valid image file.';
+                }
+            }
+            // Submit validation for the form
+            document.getElementById('uploadForm').addEventListener('submit', function(event) {
+                if (!fileInput.files[0]) {
+                    event.preventDefault();
+                    errorMessage.textContent = 'You must select a file before submitting.';
+                } else {
+                    errorMessage.textContent = '';
+                }
+            });
+        </script>
+        <script>
+            fileInput.addEventListener('change', function() {
+                const files = this.files;
+                filePreview.innerHTML = ''; // Clear previous previews
+                for (let file of files) {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.classList.add('preview-image');
+                            filePreview.appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        errorMessage.textContent = 'Please select valid image files only.';
+                    }
+                }
+            });
+        </script>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/btn.js') }}"></script>
+    </body>
+</html>

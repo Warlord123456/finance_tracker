@@ -1,0 +1,219 @@
+/* Basic styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    transition: margin-left 0.3s; /* Smooth transition for sidebar */
+}
+
+/* Navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; /* Unified background color */
+    padding: 10px 20px; /* Adjusted padding for a more compact navbar */
+    color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures navbar stays above content */
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Side Navigation */
+.side-nav {
+    height: 100%; /* Full-height */
+    width: 250px; /* Set the width of the side nav */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    top: 0;
+    left: -250px; /* Hidden by default */
+    background-color: #333; /* Side nav background */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: left 0.5s ease; /* Smooth transition effect */
+    padding-top: 60px; /* Space from the top */
+}
+
+.side-nav a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white; /* White text */
+    display: flex; /* Flexbox for icon and text alignment */
+    align-items: center; /* Center items vertically */
+    transition: background-color 0.3s; /* Transition for hover effect */
+    margin-top: 30px;
+}
+
+.side-nav a:hover {
+    background-color: #575757; /* Add color on hover */
+}
+
+.side-nav a.active {
+    background-color: #575757; /* Active link background */
+    font-weight: bold; /* Bold text for active link */
+}
+
+/* Close button styles */
+.closebtn {
+    position: absolute;
+    top: 15px; /* Position close button */
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer; /* Pointer cursor */
+}
+
+/* Main content */
+.container {
+    padding: 20px;
+    margin-left: 250px; /* Space for the sidebar */
+}
+
+/* Style for the toggle button */
+.nav-toggle {
+    display: none; /* Hide checkbox */
+}
+
+.nav-toggle-label {
+    cursor: pointer; /* Pointer cursor on hover */
+    display: none; /* Hide in desktop view */
+}
+
+/* Navbar Links */
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    flex-grow: 1; /* Allow nav-links to take available space */
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hamburger Menu for Mobile */
+.nav-toggle {
+    display: none; /* Hide toggle by default */
+}
+
+.nav-toggle-label {
+    display: none; /* Hide in desktop view */
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 30px;
+    margin-left: auto; /* Align to the right */
+    z-index: 2000; /* Ensure it's above the side menu */
+}
+
+.nav-toggle-label span {
+    display: block;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Dark Mode Compatibility */
+body.dark-mode .navbar {
+    background-color: #2D3748;
+}
+
+body.dark-mode .side-nav {
+    background-color: #1A202C;
+}
+
+body.dark-mode .nav-links a {
+    color: #E2E8F0;
+}
+.icon {
+    transition: opacity 0.3s ease; /* Transition for opacity */
+    margin-right: 8px; /* Add space between icon and text */
+}
+
+.fade-in {
+    opacity: 1; /* Fully visible */
+}
+
+.fade-out {
+    opacity: 0; /* Fully transparent */
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .nav-toggle-label {
+        display: flex; /* Show toggle button */
+    }
+
+    .side-nav {
+        width: 70%; /* Full width for mobile */
+        left: -100%; /* Initially hidden on mobile */
+    }
+
+    .container {
+        margin-left: 0; /* Reset margin */
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Start off-screen */
+        height: 100vh;
+        width: 250px;
+        background-color: #007bff; /* Navbar color */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    .nav-links a {
+        font-size: 20px;
+        padding: 15px 0;
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+
+    .nav-toggle:checked + .nav-toggle-label + .nav-links {
+        right: 0; /* Slide in when checked */
+    }
+
+    .nav-toggle:checked + .nav-toggle-label span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .nav-toggle:checked + .nav-toggle-label span:nth-child(2) {
+        opacity: 0; /* Hide middle line */
+    }
+
+    .nav-toggle:checked + .nav-toggle-label span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .nav-links {
+        display: none; /* Hide regular nav links */
+    }
+}

@@ -1,0 +1,337 @@
+/* CSS Variables for Colors */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #4caf50;
+    --background-light: #f0f4f8;
+    --background-dark: #1A202C;
+    --container-bg-light: white;
+    --container-bg-dark: #2D3748;
+    --text-light: #2c3e50;
+    --text-dark: #E2E8F0;
+    --hover-light: #0056b3;
+    --hover-dark: #4B5563;
+}
+
+/* Base styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--background-light), #d9e3f0);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background: linear-gradient(135deg, var(--background-dark), #2D3748);
+    color: var(--text-dark);
+}
+
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 80px auto 40px;
+    padding: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+    background-color: var(--container-bg-light);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; /* Added transform transition */
+    animation: fadeIn 0.5s ease; /* Fade-in animation */
+}
+
+body.dark-mode .container {
+    background-color: var(--container-bg-dark);
+}
+
+/* Text Styles */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    margin-top: 40px;
+    color: var(--text-light);
+    transition: color 0.3s; /* Transition for color change */
+}
+
+body.dark-mode h1 {
+    color: var(--primary-color);
+}
+
+p {
+    text-align: center;
+    color: #000;
+    margin-bottom: 30px;
+}
+
+body.dark-mode p {
+    color: #fff;
+}
+
+/* Link Styles */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* Link Hover Effects */
+a:hover {
+    color: var(--hover-light);
+    text-decoration: underline;
+}
+
+/* Table Styling */
+.expense-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: #ecf0f1;
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    transition: transform 0.3s ease; /* Transition for scaling */
+}
+
+.expense-card:hover {
+    transform: scale(1.02); /* Scale effect on hover */
+}
+
+body.dark-mode .expense-card {
+    background-color: var(--container-bg-dark);
+}
+
+.expense-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    table-layout: auto;
+}
+
+.expense-table th,
+.expense-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.expense-table th {
+    background-color: var(--primary-color);
+    color: #ecf0f1;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+body.dark-mode .expense-table th {
+    background-color: #1A202C;
+    color: var(--text-dark);
+}
+
+.expense-table td {
+    background-color: #fff;
+    color: var(--text-light);
+}
+
+body.dark-mode .expense-table td {
+    background-color: #4A5568;
+    color: var(--text-dark);
+}
+
+.expense-table tr {
+    transition: background-color 0.3s ease;
+}
+
+.expense-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+body.dark-mode .expense-table tr:nth-child(even) {
+    background-color: var(--background-dark);
+}
+
+.expense-table tr:hover {
+    background-color: #e1f5fe;
+    transition: background-color 0.3s ease; /* Added transition */
+}
+
+body.dark-mode .expense-table tr:hover {
+    background-color: var(--hover-dark);
+}
+
+.expense-table tr:focus-within {
+    outline: 2px solid var(--primary-color);
+}
+
+.expense-table th:hover,
+.expense-table td:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+    cursor: pointer;
+}
+/* Apply specific styling to the Items column */
+.expense-table .items-column {
+    
+    flex-basis: 200px;
+    flex-grow: 1;
+    white-space: pre-line; /* Allows line breaks within the Items column cells */
+    vertical-align: top; /* Align text to the top for multi-line content */
+    padding-left: 15px; /* Indent items to accommodate bullets */
+}
+
+
+
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    text-align: center;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.btn:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Add custom focus effect */
+}
+
+.btn-active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+a.btn {
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a.btn:hover {
+    color: #333; /* Darker text color on hover */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 30px;
+    text-align: center;
+    position: relative;
+    border-top: 3px solid #0056b3;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: auto; /* Push footer to the bottom */
+    transition: background-color 0.3s;
+}
+
+body.dark-mode footer {
+    background-color: var(--container-bg-dark);
+    color: var(--text-dark);
+}
+
+/* Dark Mode Toggle */
+.btn-toggle {
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1em;
+    cursor: pointer;
+    margin-right: 20px;
+    transition: color 0.3s ease;
+}
+
+.btn-toggle:hover {
+    color: var(--hover-light);
+}
+
+/* Animation Styles */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Move up from below */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles */
+
+/* Enhanced Mobile Styles */
+@media (max-width: 768px) {
+    body {
+        padding: 0 10px;
+    }
+
+    .container {
+        margin: 20px auto;
+        padding: 20px;
+        box-shadow: none;
+    }
+
+    .expense-card {
+        padding: 15px;
+        margin-bottom: 15px;
+        animation: fadeIn 0.5s ease; /* Fade-in animation for cards */
+    }
+
+    .expense-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .expense-table th,
+    .expense-table td {
+        display: block;
+        padding: 10px;
+        font-size: 0.9em;
+        line-height: 1.4;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .expense-table tr {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background-color: #fff;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.85em;
+        min-width: 80px;
+    }
+
+    .btn-toggle {
+        padding: 8px 15px;
+        font-size: 14px;
+        margin: 10px 0;
+    }
+
+    footer {
+        padding: 15px 20px;
+    }
+}
